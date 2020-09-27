@@ -1,5 +1,6 @@
 import React from 'react';
-import apiRequests from '../utils/apiRequests'
+import apiRequests from '../utils/apiRequests';
+import { Link } from 'react-router-dom';
 
 class ClubTable extends React.Component {
     constructor(props) {
@@ -35,10 +36,11 @@ class ClubTable extends React.Component {
       return this.state.clubs.map((club, index) => {
         const {id, name, country} = club;
         const eliminated = club.eliminated ? "True" : "False";
+        const detailsURL = `/details/${id}`
         return (
           <tr key={id}>
             <td>{id}</td>
-            <td>{name}</td>
+            <td><Link to={detailsURL}>{name}</Link></td>
             <td>{country}</td>
             <td>{eliminated}</td>
           </tr>

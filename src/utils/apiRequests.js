@@ -6,6 +6,12 @@ async function getClubs() {
     return res.json();
 }
 
+async function getClub(clubId) {
+    const res = await fetch(`${serverUrl}/api/v1/club/${clubId}`);
+    return res.json();
+}
+
 module.exports = {
     getClubs,
+    getClub,
 }

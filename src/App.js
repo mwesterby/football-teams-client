@@ -1,16 +1,38 @@
 import React from 'react';
 import './App.css';
-import ClubTable from './components/clubTable'
+import { Switch, Route, Link } from 'react-router-dom'
+import Listings from './Listings';
+import Details from './Details';
 
-function Title(props) {
-  return <h1>{props.title}</h1>
+function Main() {
+  return (
+    <main>
+      <Switch>
+        <Route exact path='/' component={Listings} />
+        <Route path='/details/:id' component={Details} />
+      </Switch>
+    </main>
+  );
 }
+
+// function Header() {
+//   return (
+//     <header>
+//       <nav>
+//         <ul>
+//           <li><Link to='/'>Home</Link></li>
+//           <li><Link to='/details/1'>Details</Link></li>
+//         </ul>
+//       </nav>
+//     </header>
+//   );
+// }
 
 function App() {
   return (
-    <div className="App">
-      <Title title="Listings" />
-      <ClubTable />
+    <div>
+      {/* <Header /> */}
+      <Main />
     </div>
   );
 }
