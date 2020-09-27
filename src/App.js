@@ -1,21 +1,6 @@
 import React from 'react';
 import './App.css';
-
-const exampleData = [
-  {
-      "id": 2610,
-      "name": "Olympiacos",
-      "country": "Greece",
-      "eliminated": true
-  },
-  {
-      "id": 7889,
-      "name": "Liverpool",
-      "country": "England",
-      "eliminated": true
-  }
-];
-
+import apiRequests from './utils/apiRequests'
 
 function Title(props) {
   return <h1>{props.title}</h1>
@@ -29,10 +14,10 @@ class ClubTable extends React.Component {
     }
   }
 
-
-  componentDidMount() {
+  async componentDidMount() {
+    const clubs = await apiRequests.getClubs();
     this.setState({
-      clubs: exampleData
+      clubs: clubs
     });
   }
 
@@ -41,7 +26,7 @@ class ClubTable extends React.Component {
       const {id, name, country} = club;
       const eliminated = club.eliminated ? "True" : "False";
       return (
-        <tr>
+        <tr key={id}>
           <td>{id}</td>
           <td>{name}</td>
           <td>{country}</td>
@@ -53,7 +38,7 @@ class ClubTable extends React.Component {
 
   render() {
     return (
-      <table>
+      <table id="clubs">
         <tr>
           <th>ID</th>
           <th>Name</th>
@@ -65,8 +50,6 @@ class ClubTable extends React.Component {
     );
   } 
 }
-
-
 
 function App() {
   return (
