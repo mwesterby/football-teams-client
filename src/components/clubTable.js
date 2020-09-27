@@ -1,51 +1,33 @@
 import React from 'react';
 import apiRequests from '../utils/apiRequests';
-import { Link } from 'react-router-dom';
 
 class ClubTable extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        clubs: []
+        club: {
+          id: props.id
+        }
       }
-    }
-  
-    sortClubs(clubs) {
-        clubs.sort((a, b) => {
-            const nameA = a.name.toUpperCase();
-            const nameB = b.name.toUpperCase();
-              if(nameA < nameB) {
-                  return -1;
-              }
-              if(nameA > nameB) {
-                  return 1;
-              }
-              return 0;
-          });
-        return clubs;
     }
 
     async componentDidMount() {
-      let clubs = await apiRequests.getClubs();
+      let club = await apiRequests.getClub(this.state.club.id);
       this.setState({
-        clubs: this.sortClubs(clubs)
+        club,
       });
     }
   
     renderTableData() {
-      return this.state.clubs.map((club, index) => {
-        const {id, name, country} = club;
-        const eliminated = club.eliminated ? "True" : "False";
-        const detailsURL = `/details/${id}`
-        return (
-          <tr key={id}>
-            <td>{id}</td>
-            <td><Link to={detailsURL}>{name}</Link></td>
-            <td>{country}</td>
-            <td>{eliminated}</td>
-          </tr>
-        );
-      })
+      const {id, name, country, eliminated} = this.state.club;
+      return (
+        <tr key={id}>
+          <td>{id}</td>
+          <td>{name}</td>
+          <td>{country}</td>
+          <td><input type="checkbox" id={id} name={name} defaultChecked={eliminated} value="eliminated"/></td>
+        </tr>
+      );
     }
 
     renderTableHeader() {
