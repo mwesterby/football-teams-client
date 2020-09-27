@@ -1,23 +1,43 @@
 import React from 'react';
-// import './App.css';
+import './App.css';
 import apiRequests from './utils/apiRequests'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function TeamBadge(props) {
     const alt = `${props.name}'s Team Badge`;
     return <img src={`http://img.uefa.com/imgml/TP/teams/logos/70x70/${props.id}.png`} alt={alt} />
 }
 
-function ClubDetails (props){
-  const {name, id} = props;
-  return (
-      <div>
-          <h1>{name}</h1>
-          <TeamBadge name={name} id={id} /><br />
-          <a href={`https://www.uefa.com/teamsandplayers/teams/club=${id}/profile/index.html`}>{name}'s UEFA Club Profile</a>
-          <hr />
-      </div>
-  );
+class ClubDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        id: props.id,
+        name: "",
+    };
+  }
+
+  async componentDidMount() {
+    const club = await apiRequests.getClub(this.state.id);
+    this.setState({
+      id: club.id,
+      name: club.name,
+    });
+  }
+
+
+  render() {
+    const {name, id} = this.state;
+    return (
+        <div>
+            <h1>{name}</h1>
+            <TeamBadge name={name} id={id} /><br />
+            <a href={`https://www.uefa.com/teamsandplayers/teams/club=${id}/profile/index.html`}>{name}'s UEFA Club Profile</a>
+            <hr />
+        </div>
+    );
+  }
+
 }
 
 class EditClubForm extends React.Component {
@@ -35,7 +55,7 @@ class EditClubForm extends React.Component {
       }
 
       handleChange(event) {
-        this.setState({[event.target.name]: event.target.value});
+        this.setState({[event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value});
       }
 
       async handleSubmit(event) {
@@ -65,20 +85,20 @@ class EditClubForm extends React.Component {
         const {id, name, country, eliminated} = this.state
         console.log(this.state)
         return (
-            <div>
-              <ClubDetails id={id} name={name} />
+            <div id='editClubForm'>
+              
               <form onSubmit={this.handleSubmit}>
-                  <label for='clubId'>ID:</label><br />
-                  <input name='id' id='clubId' type="text" value={id} onChange={this.handleChange}></input><br />
+                  <label>ID:</label><br />
+                  <input name='id' id='clubId' type="text" value={id}></input><br />
       
-                  <label for='name'>Name:</label><br />
+                  <label>Name:</label><br />
                   <input name='name' id='name' type="text" defaultValue={name} onChange={this.handleChange}></input><br />
       
-                  <label for='country'>Country:</label><br />
+                  <label>Country:</label><br />
                   <input name='country' id='country' type="text" defaultValue={country} onChange={this.handleChange}></input><br />
                   
-                  <label for='eliminated'>Eliminated:</label><br />
-                  <input name='eliminated' id='eliminated' type="checkbox" defaultChecked={eliminated} onChange={this.handleChange}></input><br />
+                  <label>Eliminated:</label><br />
+                  <input name='eliminated' id='eliminated' type="checkbox" checked={eliminated} value={eliminated} onChange={this.handleChange}></input><br />
               
                   <input type="submit" value="Save"></input>        
               </form>  
@@ -93,7 +113,8 @@ function Details(props) {
   const clubId = parseInt(props.match.params.id, 10);
   return (
     <div className="Detials">
-        <Link to='/'>Home</Link>   
+        <Link to='/'>Home</Link>
+        <ClubDetails id={clubId} />
         <EditClubForm id={clubId}/>
     </div>
   );
