@@ -15,23 +15,9 @@ function Main() {
   );
 }
 
-// function Header() {
-//   return (
-//     <header>
-//       <nav>
-//         <ul>
-//           <li><Link to='/'>Home</Link></li>
-//           <li><Link to='/details/1'>Details</Link></li>
-//         </ul>
-//       </nav>
-//     </header>
-//   );
-// }
-
 function App() {
   return (
     <div>
-      {/* <Header /> */}
       <Main />
     </div>
   );

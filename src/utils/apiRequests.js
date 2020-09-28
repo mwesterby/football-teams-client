@@ -20,7 +20,6 @@ async function updateClub(clubId, body) {
     return res.json();
 }
 
-
 module.exports = {
     getClubs,
     getClub,
