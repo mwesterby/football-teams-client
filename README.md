@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> A client for displaying football clubs and their status in the league. The associated server can be found at https://github.com/mwesterby/football-teams
+> A client for displaying football clubs and their status in the league. The associated server can be found at https://github.com/mwesterby/football-teams-server
 
 ## Install
 
@@ -14,7 +14,7 @@ npm install
 ## Usage
 
 ```sh
-npm run start
+npm start
 ```
 
 ## Author
