@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { serverUrl } = require('../config/index')
+const { serverUrl } = require('../config/server')
 
 async function getClubs() {
     const res = await fetch(`${serverUrl}/api/v1/clubs/`);

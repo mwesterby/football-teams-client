@@ -1,6 +1,6 @@
 import React from 'react';
-// import './App.css';
-import ClubsTable from './components/clubsTable'
+import '../styles/Listings.css';
+import ClubsTable from '../components/clubsTable'
 
 function Title(props) {
   return <h1>{props.title}</h1>
