@@ -1,5 +1,5 @@
 import React from 'react';
-import apiRequests from '../utils/apiRequests';
+import { getClubs } from '../utils/apiRequests';
 import { Link } from 'react-router-dom';
 
 class ClubsTable extends React.Component {
@@ -26,7 +26,7 @@ class ClubsTable extends React.Component {
     }
 
     async componentDidMount() {
-      let clubs = await apiRequests.getClubs();
+      let clubs = await getClubs();
       this.setState({
         clubs: this.sortClubs(clubs)
       });

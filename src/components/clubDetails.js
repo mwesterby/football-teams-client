@@ -1,5 +1,5 @@
 import React from 'react';
-import apiRequests from '../utils/apiRequests';
+import { getClub } from '../utils/apiRequests';
 
 function TeamBadge(props) {
     const teamBadgeURL = `http://img.uefa.com/imgml/TP/teams/logos/70x70/${props.id}.png`
@@ -17,7 +17,7 @@ class ClubDetails extends React.Component {
     }
   
     async componentDidMount() {
-      const club = await apiRequests.getClub(this.state.id);
+      const club = await getClub(this.state.id);
       this.setState({
         id: club.id,
         name: club.name,

@@ -1,5 +1,5 @@
 import React from 'react';
-import apiRequests from '../utils/apiRequests'
+import { getClub, updateClub } from '../utils/apiRequests'
 import { countries } from '../utils/countries'
 
 function Countries(props) {
@@ -39,13 +39,13 @@ class EditClubForm extends React.Component {
           country: this.state.country,
           eliminated: this.state.eliminated,
         }
-        apiRequests.updateClub(this.state.id, editedClub);
+        updateClub(this.state.id, editedClub);
         event.preventDefault();
         if (window.confirm("Are you sure you want to update these values?")) window.location = "/";
       }
 
       async componentDidMount() {
-        const club = await apiRequests.getClub(this.props.id);
+        const club = await getClub(this.props.id);
         this.setState({
           id: club.id,
           name: club.name,
